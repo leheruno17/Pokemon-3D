@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101014" />
+    <meta name="description" content="Suas cartas favoritas, em uma nova dimensão. Explore Pokémon em ambientes 3D interativos." />
+    <title>Poké Dimension — Além da carta</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="site-header flex items-center justify-between">
+        <a class="brand flex items-center" href="./" aria-label="Poké Dimension, início">
+          <span class="brand-mark" data-icon="dimension"></span>
+          <span>poké<span class="brand-light">dimension</span><span class="brand-dot">.</span></span>
+        </a>
+        <nav class="main-nav flex items-center" aria-label="Navegação principal">
+          <a class="nav-link active" href="#explorar">Explorar <span class="nav-dot"></span></a>
+          <button class="nav-link" id="collection-button">Minha coleção <span id="favorite-count">0</span></button>
+        </nav>
+        <div class="header-actions flex items-center">
+          <span class="edition-label">POKÉMON TCG MEETS 3D</span>
+          <span class="header-divider"></span>
+          <button id="help-button" class="icon-button" aria-label="Como explorar" title="Como explorar" data-icon="help"></button>
+          <a class="github-label" href="#galeria">Descubra <span data-icon="arrow-up-right"></span></a>
+        </div>
+      </header>
+
+      <main id="explorar">
+        <section class="intro flex items-end justify-between">
+          <div>
+            <p class="eyebrow"><span class="tiny-star">✦</span> SUAS CARTAS, UMA NOVA PERSPECTIVA</p>
+            <h1>Além da <span>carta.</span></h1>
+            <p class="intro-description">Entre na dimensão dos seus Pokémon favoritos.</p>
+          </div>
+          <div class="experience-label flex items-center"><span class="orbit-symbol" data-icon="orbit"></span><div>Feito para explorar.<br /><span>Gire. Descubra. Surpreenda-se.</span></div></div>
+        </section>
+
+        <section class="experience" aria-label="Visualizador interativo de Pokémon">
+          <div class="scene-shell" id="scene-shell">
+            <div class="scene-grid"></div>
+            <div class="scene-heading">
+              <div class="live-label"><span></span> AMBIENTE 3D <i></i> <span id="environment-label">DIMENSÃO ESPECTRAL</span></div>
+              <h2 id="environment-title">O outro lado do visível.</h2>
+              <p id="environment-description">Entre névoa e energia, uma presença extraordinária.</p>
+            </div>
+            <div class="scene-badges"><span class="scene-badge"><span data-icon="sparkles"></span><span id="scene-type">TERACRISTAL</span></span><button id="show-panel" class="icon-button" aria-label="Abrir informações da carta" aria-expanded="true" aria-controls="info-panel" data-icon="panel"></button></div>
+            <div class="scene-word" id="scene-word" aria-hidden="true">DRAGAPULT</div>
+            <canvas id="scene-canvas" aria-label="Modelo 3D de Dragapult. Arraste para girar, role para ampliar. Use as setas do teclado para girar." tabindex="0"></canvas>
+            <div class="scene-loading" id="scene-loading"><span class="loading-orbit"></span><span>Abrindo uma nova dimensão…</span></div>
+            <div class="model-note" id="model-note"><span class="status-dot"></span> MODELO ESTILIZADO <span class="note-info" title="Prévia procedural em 3D. Adicione o arquivo GLB para exibir o modelo original.">i</span></div>
+            <div class="scene-coordinates" aria-hidden="true"><span id="dex-watermark">Nº 0887</span><span>POKÉ DIMENSION / 01</span></div>
+            <div class="scene-bottom">
+              <div class="interaction-hint"><span data-icon="mouse"></span><span>Arraste para girar<br /><small>Role para aproximar</small></span></div>
+              <div class="viewer-controls" role="toolbar" aria-label="Controles da cena">
+                <button id="rotate-button" class="control-button auto-rotate-button selected" aria-label="Giro automático do modelo" aria-pressed="true" title="Giro automático do modelo (R)"><span data-icon="rotate"></span><span>Giro automático</span></button>
+                <span class="control-divider"></span>
+                <button id="zoom-out" class="control-button" aria-label="Diminuir zoom" title="Diminuir zoom (-)" data-icon="minus"></button>
+                <button id="zoom-in" class="control-button" aria-label="Aumentar zoom" title="Aumentar zoom (+)" data-icon="plus"></button>
+                <span class="control-divider"></span>
+                <button id="reset-camera" class="control-button" aria-label="Restaurar câmera" title="Restaurar câmera (0)" data-icon="reset"></button>
+                <button id="fullscreen-button" class="control-button" aria-label="Tela cheia" title="Tela cheia (F)" data-icon="expand"></button>
+              </div>
+              <button class="motion-button" id="motion-button" aria-label="Pausar animações" aria-pressed="false" title="Pausar animações"><span data-icon="pause"></span><span class="motion-label">Pausar</span></button>
+            </div>
+            <div id="scene-error" class="scene-error" hidden><span data-icon="dimension"></span><h3>Esta dimensão precisa de WebGL</h3><p>Ative a aceleração gráfica do navegador para explorar os modelos. As cartas e suas informações continuam disponíveis.</p></div>
+          </div>
+
+          <aside id="info-panel" class="info-panel" aria-label="Informações da carta selecionada">
+            <div class="panel-top flex items-center justify-between"><span id="pokemon-number">Nº 0887 <i>·</i> ESTÁGIO 2</span><div class="flex"><button id="favorite-button" class="icon-button" aria-label="Favoritar Dragapult" aria-pressed="false" data-icon="bookmark"></button><button id="hide-panel" class="icon-button" aria-label="Recolher informações" data-icon="chevron-right"></button></div></div>
+            <div class="pokemon-name-row"><h2 id="pokemon-name">Dragapult</h2><span class="ex-label">ex</span></div>
+            <div class="pokemon-classification"><span id="pokemon-species">Pokémon Furtivo</span><span class="hp"><small>PS</small> <strong id="pokemon-hp">320</strong><span data-icon="heart"></span></span></div>
+            <div class="type-list" id="type-list"></div>
+            <p class="pokemon-description" id="pokemon-description"></p>
+            <div class="section-rule"><span>A CARTA</span><span data-icon="cards"></span></div>
+            <div class="card-meta"><div><span>Expansão</span><strong id="card-set"></strong></div><div><span>Raridade</span><strong class="rarity"><span>✦ ✦</span> Ilustração especial</strong></div></div>
+            <div class="section-rule attack-rule"><span>GOLPES</span><span data-icon="swords"></span></div>
+            <div id="attacks" class="attacks"></div>
+            <div id="ability" class="ability"></div>
+            <div class="panel-footer"><span class="status-dot"></span> Cada carta abre um novo universo.</div>
+          </aside>
+        </section>
+
+        <section id="galeria" class="gallery-section" aria-label="Galeria de cartas">
+          <div class="gallery-heading flex items-center justify-between"><div class="flex items-center"><h2>Escolha sua próxima dimensão</h2><span class="count-badge">03</span></div><span class="gallery-hint"><span data-icon="pointer"></span> Uma carta. Um universo inteiro.</span></div>
+          <div id="card-gallery" class="card-gallery" role="group" aria-label="Selecione um Pokémon"></div>
+        </section>
+      </main>
+      <footer class="site-footer flex items-center justify-between"><span>Feito de cartas. Movido pela imaginação.</span><span>UMA EXPERIÊNCIA NÃO OFICIAL <i>·</i> Pokémon © Nintendo / Creatures / GAME FREAK</span><span class="footer-status"><span class="status-dot"></span> EXPLORE SEM LIMITES</span></footer>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <dialog id="help-dialog" class="modal"><div class="modal-heading"><span class="eyebrow">GUIA DO EXPLORADOR</span><button class="icon-button close-dialog" aria-label="Fechar" data-icon="close"></button></div><h2>Uma nova perspectiva.<br /><span>A cada movimento.</span></h2><p>Selecione uma carta e veja a dimensão se transformar.</p><div class="help-grid"><div><span data-icon="mouse"></span><strong>Explore em 360°</strong><p>Arraste com o mouse ou um dedo. Use as setas do teclado com a cena em foco.</p></div><div><span data-icon="zoom"></span><strong>Chegue mais perto</strong><p>Role, faça o gesto de pinça ou use os botões + e −.</p></div><div><span data-icon="rotate"></span><strong>Encontre seu ângulo</strong><p>R alterna a rotação. 0 restaura a câmera. F abre a tela cheia.</p></div><div><span data-icon="cards"></span><strong>Explore as cartas</strong><p>Conheça os golpes no painel. Salve seus favoritos na coleção.</p></div></div><div class="help-note">Os modelos atuais são interpretações 3D estilizadas. Arquivos originais em <code>public/models/</code> são carregados automaticamente.</div><button class="primary-button close-dialog">Vamos explorar <span data-icon="arrow-right"></span></button></dialog>
+    <dialog id="collection-dialog" class="modal"><div class="modal-heading"><span class="eyebrow">SEUS FAVORITOS</span><button class="icon-button close-dialog" aria-label="Fechar" data-icon="close"></button></div><h2>Minha coleção<span>.</span></h2><p>As dimensões para as quais você sempre quer voltar.</p><div id="collection-content"></div></dialog>
+    <script type="module">
+      // Static previews serve the compiled app; Vite processes the source entry.
+      if (import.meta.env?.DEV === undefined) {
+        const preview = new URL('./dist/index.html', window.location.href);
+        preview.search = window.location.search;
+        preview.hash = window.location.hash;
+        window.location.replace(preview.href);
+      } else {
+        import('./src/main.js');
+      }
+    </script>
+  </body>
+</html>
