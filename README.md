@@ -24,6 +24,22 @@ O build estático é gerado em `dist/`. As fontes Google são opcionais: sem con
 
 Ao abrir o `index.html` da raiz em um servidor de preview, ele encaminha automaticamente para `dist/index.html`, que contém o CSS e o JavaScript já compilados. O build usa caminhos relativos para funcionar também em subpastas. Execute `npm run build` após alterar os arquivos para atualizar esse preview. Para ver alterações imediatamente durante o desenvolvimento, use `npm run dev`.
 
+## Hospedagem
+
+Publique o resultado de `npm run build`, gerado em `dist/`. O `index.html` da raiz é uma entrada de desenvolvimento/preview e redireciona para `dist/index.html` quando servido sem Vite. Publicar apenas os arquivos do repositório não funciona: `dist/` é ignorado pelo Git e precisa ser gerado na hospedagem.
+
+### Netlify
+
+Ao importar o repositório, mantenha o diretório base na raiz do projeto. O arquivo `netlify.toml` configura Node.js 22, o comando `npm run build` e o diretório de publicação `dist`.
+
+Se usar upload manual (arrastar e soltar), execute `npm install` e `npm run build` localmente e envie a pasta `dist`, que deve conter `index.html` diretamente. O upload manual não compila o projeto.
+
+### GitHub Pages
+
+Em **Settings → Pages → Build and deployment → Source**, selecione **GitHub Actions**. Envie as alterações para a branch `main`: o workflow `.github/workflows/pages.yml` instala as dependências, compila o site e publica `dist/`. Também é possível executá-lo manualmente pela aba **Actions**. Se a branch de publicação tiver outro nome, ajuste `branches` no workflow.
+
+Não use a publicação direta da raiz da branch para este projeto. A configuração `base: './'` do Vite já permite que os arquivos compilados funcionem no endereço de subpasta do GitHub Pages.
+
 ## Modelos GLB
 
 Os anexos incluem cartas e vídeos, **mas não incluem arquivos GLB**. Por isso, a aplicação oferece interpretações 3D estilizadas, construídas com geometria procedural, claramente identificadas na cena. Não são os modelos originais dos vídeos.
